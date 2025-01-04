@@ -76,14 +76,14 @@ namespace _Scripts
             public float deltatTime;
             public void Execute(ref LocalTransform localTransform, in RotateSpeed rotateSpeed)
             {
-                float power = 1f;
-                for (int i = 0; i < 100000; i++)
-                {
-                    power *= 2f;
-                    power /= 2f;
-                }
+                // float power = 1f;
+                // for (int i = 0; i < 100000; i++)
+                // {
+                //     power *= 2f;
+                //     power /= 2f;
+                // }
                 
-                localTransform = localTransform.RotateY(rotateSpeed.value * deltatTime);
+               // localTransform = localTransform.RotateY(rotateSpeed.value * deltatTime);
 
             }
         }

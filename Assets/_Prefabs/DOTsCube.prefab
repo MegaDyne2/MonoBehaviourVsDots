@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2955065640534863593}
   - component: {fileID: 8086898046389659002}
   - component: {fileID: 8133767636043048897}
+  - component: {fileID: 7991910532952137792}
   - component: {fileID: 6133524732245738575}
   m_Layer: 0
   m_Name: DOTsCube
@@ -66,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,10 +106,23 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7991910532952137792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005418165147019816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6300b2191a8a354c82076af92174e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 90
 --- !u!114 &6133524732245738575
 MonoBehaviour:
   m_ObjectHideFlags: 0

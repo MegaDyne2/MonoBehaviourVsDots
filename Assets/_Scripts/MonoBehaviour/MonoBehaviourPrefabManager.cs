@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -6,45 +9,40 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
 {
     public GameObject prefabMono; // Prefab for boids
 
-    public int rowCount = 10;
-    public int colCount = 10;
-    public float distanceZ = 20.0f;
-
-    public float spacing = 1.5f;
+    public int rowCount = 100;
+    public int colCount = 100;
+    public float distanceZ = 100.0f;
     
+    private float _spacing = 2f;
+
+
     
     public int prefabCount = 50; // Number of boids to spawn
 
-    void Start()
+    private List<Transform> saveObjects = new ();
+    private List<MonoBehaviourPrefabController> monoBehaviourControllers = new ();
+
+
+
+    private void Update()
     {
-        // for (int i = 0; i < boidCount; i++)
-        // {
-        //     Vector3 spawnPosition = new Vector3(
-        //         Random.Range(-spawnArea.x / 2, spawnArea.x / 2),
-        //         Random.Range(-spawnArea.y / 2, spawnArea.y / 2),
-        //         Random.Range(-spawnArea.z / 2, spawnArea.z / 2)
-        //     );
-        //
-        //     //Instantiate(boidPrefab, spawnPosition, Quaternion.identity);
-        // }
+        foreach (var controller in monoBehaviourControllers)
+        {
+            //Debug.unityLogger.Log($"Normal: {controller.speed} | {Time.deltaTime} | {controller.speed * Time.deltaTime}"); 
 
-        SpawnGroup(rowCount, colCount, spacing, distanceZ, out var spawnCount, out var instantiateTime);
-
-        DeleteAllChildren();
+            
+            controller.transform.Rotate(Vector3.up, controller.speed * Time.deltaTime);
+        }
     }
-    
+
     public void SpawnGroup(int inRow, int inCol, float inSpacing, float inZ, out int outCount, out long instantiateTime)
     {
-        
-        foreach(Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
-        
-        this.transform.SetPositionAndRotation(new Vector3(0.0f, 0.0f, inZ), Quaternion.identity);
 
-        float startWidth = - (inRow * inSpacing * 0.5f);  
-        float startHeight = - (inCol * inSpacing * 0.5f);
+        
+        this.transform.SetPositionAndRotation(new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+
+        float startHeight = - (inRow * inSpacing * 0.5f);  
+        float startWidth = - (inCol * inSpacing * 0.5f);
 
         prefabCount = inRow * inCol;
         
@@ -55,11 +53,14 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
         {
             for (int j = 0; j < inCol; j++)
             {
-                GameObject go = Instantiate(prefabMono, transform);
+                GameObject go = Instantiate(prefabMono, null);
                 go.name = i + "," + j;
                 go.transform.SetLocalPositionAndRotation(
-                    new Vector3(startWidth + (inSpacing * i), startHeight + (inSpacing * j), 0.0f), 
+                    new Vector3(startWidth + (inSpacing * j), startHeight + (inSpacing * i), inZ), 
                     Quaternion.identity);
+                
+                saveObjects.Add(go.transform);
+                monoBehaviourControllers.Add(go.GetComponent<MonoBehaviourPrefabController>());
             }
         }
         
@@ -74,24 +75,14 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
     }
 
 
-    public float DeleteAllChildren()
+    public void DeleteAllChildren()
     {
-        // Measure delete time
-        Stopwatch stopwatch = new Stopwatch();
-        stopwatch.Start();
-        
-        foreach(Transform child in transform)
+        foreach(Transform child in saveObjects)
         {
             Destroy(child.gameObject);
         }
-        stopwatch.Stop();
-        // Calculate elapsed time in milliseconds with high precision
-        double milliseconds = (double)stopwatch.ElapsedTicks / Stopwatch.Frequency * 1000.0;
-
-        // Log the precise time
-        Debug.Log($"DeleteAllChildren {prefabCount} prefabs in {milliseconds:0.000000} ms");
-
-        return (long)milliseconds;
+        saveObjects.Clear();
+        monoBehaviourControllers.Clear();
     }
     
 }
