@@ -3,6 +3,8 @@ using UnityEngine;
 public class FlyCamera : MonoBehaviour
 {
     [SerializeField] private UIController uIController;
+    [SerializeField] private GameObject prefabBullet;
+    
     public float speed = 10f; // Movement speed
     public float lookSpeed = 2f; // Look sensitivity
 
@@ -29,6 +31,20 @@ public class FlyCamera : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             uIController.SetFlyCameraActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            GameObject go = Instantiate(prefabBullet, transform.position, Quaternion.identity);
+            MonoBehaviourBullet bullet = go.GetComponent<MonoBehaviourBullet>();
+            Rigidbody rb = go.GetComponent<Rigidbody>();
+            
+            rb.linearVelocity = transform.TransformDirection(Vector3.forward) * bullet.speed;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            
         }
     }
 }
