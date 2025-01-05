@@ -7,6 +7,8 @@ using Object = UnityEngine.Object;
 
 public class UIController : MonoBehaviour
 {
+    [SerializeField] CanvasGroup canvasGroup;
+    
     [SerializeField] private Slider sliderRow;
     [SerializeField] private TextMeshProUGUI textRow;
 
@@ -19,6 +21,9 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI textMessage;
 
+    [SerializeField] private FlyCamera flyCamera;
+
+    
     
     private MonoBehaviourPrefabManager _spawnerMonobehaviour;
     private SpawnCubesSystem _spawnerDOTs;
@@ -114,10 +119,19 @@ public class UIController : MonoBehaviour
                         $"Time: {outTime}ms\n" +
                         $"Press Esc to return mouse";
 
-        textMessage.SetText(output);        
+        textMessage.SetText(output);
+
+        SetFlyCameraActive(true);
+    } 
+
+    public void SetFlyCameraActive(bool active)
+    {
+        flyCamera.enabled = active;
+        canvasGroup.enabled = !active;
+        
+        Cursor.lockState = active?CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !active;
     }
-
-
     //public void OnButtonClick_MonoBehaviour_Destroy()
     
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FlyCamera : MonoBehaviour
 {
+    [SerializeField] private UIController uIController;
     public float speed = 10f; // Movement speed
     public float lookSpeed = 2f; // Look sensitivity
 
@@ -23,5 +24,11 @@ public class FlyCamera : MonoBehaviour
             Input.GetAxis("Vertical")
         );
         transform.position += transform.TransformDirection(move) * speed * Time.deltaTime;
+
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            uIController.SetFlyCameraActive(false);
+        }
     }
 }
