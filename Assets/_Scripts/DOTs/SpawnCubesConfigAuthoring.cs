@@ -5,6 +5,8 @@ public class SpawnCubesConfigAuthoring : MonoBehaviour
 {
 
     public GameObject cubePrefab;
+    public bool useMultithreading = false;
+    
     public int amountToSpawn;
     
     
@@ -18,7 +20,8 @@ public class SpawnCubesConfigAuthoring : MonoBehaviour
             AddComponent(entity, new SpawnCubesConfig
             {
                 cubePrefabEntity = GetEntity(authoring.cubePrefab,TransformUsageFlags.Dynamic),
-                amountToSpawn = authoring.amountToSpawn,
+                useMultiThreading = authoring.useMultithreading // Set the field
+
             });
         }
     }
@@ -29,5 +32,5 @@ public class SpawnCubesConfigAuthoring : MonoBehaviour
 public struct SpawnCubesConfig : IComponentData
 {
     public Entity cubePrefabEntity;
-    public int amountToSpawn;
+    public bool useMultiThreading;
 }

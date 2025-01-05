@@ -1,7 +1,7 @@
 using Unity.Burst;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 [BurstCompile]
 public partial struct HandleCubesSystem : ISystem
@@ -9,15 +9,40 @@ public partial struct HandleCubesSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         var deltaTime = SystemAPI.Time.DeltaTime;
-        foreach (RotatingMovingCubeAspect rotatingMovingCubeAspect in
-                 SystemAPI.
-                     Query<RotatingMovingCubeAspect>().
-                     WithAll<RotatingCube>())
-        {
-            
-            rotatingMovingCubeAspect.MoveAndRotate(deltaTime);
-            
 
+        // Get the threading mode from the SpawnCubesConfig
+        var spawnConfig = SystemAPI.GetSingleton<SpawnCubesConfig>();
+
+        if (spawnConfig.useMultiThreading)
+        {
+            // Multi-threaded job execution
+            var job = new HandleCubesJob
+            {
+                DeltaTime = deltaTime
+            };
+
+            state.Dependency = job.ScheduleParallel(state.Dependency);
         }
+        else
+        {
+            // Single-threaded execution
+            foreach (RotatingMovingCubeAspect rotatingMovingCubeAspect in
+                     SystemAPI.Query<RotatingMovingCubeAspect>().WithAll<RotatingCube>())
+            {
+                rotatingMovingCubeAspect.MoveAndRotate(deltaTime);
+            }
+        }
+    }
+}
+
+
+[BurstCompile]
+public partial struct HandleCubesJob : IJobEntity
+{
+    public float DeltaTime;
+
+    public void Execute(ref LocalTransform localTransform, in RotateSpeed rotateSpeed)
+    {
+        localTransform = localTransform.RotateY(math.radians(rotateSpeed.value * DeltaTime));
     }
 }

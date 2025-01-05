@@ -23,10 +23,12 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private FlyCamera flyCamera;
 
-    
+    [SerializeField] private Toggle toggleMultiThreaded;
+
     
     private MonoBehaviourPrefabManager _spawnerMonobehaviour;
     private SpawnCubesSystem _spawnerDOTs;
+    
     
     private bool _isDots = false;
 
@@ -64,6 +66,36 @@ public class UIController : MonoBehaviour
         SpawnObjects(true);
     }
 
+    public void OnToggle_DOTs_Multithread()
+    {
+        Debug.Log("OnToggle_DOTs_Multithread: " + toggleMultiThreaded.isOn);
+        var world = World.DefaultGameObjectInjectionWorld;
+        var entityManager = world.EntityManager;
+
+        // Query the singleton entity manually
+        EntityQuery singletonQuery = entityManager.CreateEntityQuery(ComponentType.ReadWrite<SpawnCubesConfig>());
+
+        if (singletonQuery.CalculateEntityCount() > 0)
+        {
+            // Get the singleton entity
+            Entity singletonEntity = singletonQuery.GetSingletonEntity();
+
+            // Modify the useMultiThreading field
+            var spawnConfig = entityManager.GetComponentData<SpawnCubesConfig>(singletonEntity);
+            spawnConfig.useMultiThreading = toggleMultiThreaded.isOn; // Use the bool from the UI
+            entityManager.SetComponentData(singletonEntity, spawnConfig);
+
+            Debug.Log($"UseMultiThreading: {spawnConfig.useMultiThreading}");
+        }
+        else
+        {
+            Debug.LogError("SpawnCubesConfig singleton entity not found!");
+        }
+
+        // Clean up the query
+        singletonQuery.Dispose();
+        
+    }
     public void OnButtonClick_Delete()
     {
         if (_isDots == false)
