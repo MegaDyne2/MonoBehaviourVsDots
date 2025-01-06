@@ -30,22 +30,21 @@ public partial class SpawnCubesSystem : SystemBase
 
         if (this.Enabled == false)
             return;
-        //SpawnGroup(rowCount, colCount, spacing, distanceZ, out var spawnCount, out var instantiateTime);
+
         SpawnGroupWork(rowCount, colCount, spacing, distanceZ);
         this.Enabled = false;
 
     }
 
-    public void SpawnGroup(int inRow, int inCol, float inSpacing, float inZ, out int outCount, out long instantiateTime)
+    public void SpawnGroup(int inRow, int inCol, float inSpacing, float inZ)
     {
 
         rowCount = inRow;
         colCount = inCol;
         distanceZ = inZ;
         spacing = inSpacing;
+        
         this.Enabled = true;
-        outCount = 0;
-        instantiateTime = 0;
 
     }
 
@@ -84,13 +83,6 @@ public partial class SpawnCubesSystem : SystemBase
                 entities.Add(spawnedEntity);
             }
         }
-        
-        // Calculate elapsed time in milliseconds with high precision
-        double milliseconds = (double)stopwatch.ElapsedTicks / Stopwatch.Frequency * 1000.0;
-
-        // Log the precise time
-       // Debug.Log($"Initialized {prefabCount} prefabs in {milliseconds:0.000000} ms");
-        
     }
 
     public void SpawnBullet(Vector3 position, Vector3 velocity)

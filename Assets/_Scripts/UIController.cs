@@ -1,50 +1,61 @@
-using System;
 using System.Collections;
 using TMPro;
 using Unity.Entities;
 using Unity.Scenes;
 using UnityEngine;
 using UnityEngine.UI;
-using Object = UnityEngine.Object;
 
+/// <summary>
+/// This allows actions for the UI menu
+/// </summary>
 public class UIController : MonoBehaviour
 {
+    #region Links
+
     [SerializeField] CanvasGroup canvasGroup;
-    
     [SerializeField] private Slider sliderRow;
     [SerializeField] private TextMeshProUGUI textRow;
-
     [SerializeField] private Slider sliderCol;
     [SerializeField] private TextMeshProUGUI textCol;
-
     [SerializeField] private Slider sliderZPos;
     [SerializeField] private TextMeshProUGUI textZPos;
-
-
     [SerializeField] private TextMeshProUGUI textMessage;
-
     [SerializeField] private FlyCamera flyCamera;
-
     [SerializeField] private Toggle toggleMultiThreaded;
-
     [SerializeField] private SubScene subSceneDots;
-    
-    private MonoBehaviourPrefabManager _spawnerMonobehaviour;
-    private SpawnCubesSystem _spawnerDOTs;
- 
-    
-    private bool _isDots = false;
 
-    public bool IsDots()
-    {
-        return _isDots;
-    }
+    #endregion
+
+    #region Private Variables
+
+    private MonoBehaviourPrefabManager _spawnerMonobehaviour;
+    private SpawnCubesSystem _spawnerDOTS;
+    private bool _isDOTS = false;
+
+    #endregion
+
+    #region Unity Functions
+
     private void Awake()
     {
+        //Set all the Slider Texts
         SetRowText();
         SetColText();
         SetZPosText();
     }
+
+    #endregion
+    
+    #region Accessors
+
+    public bool IsDots()
+    {
+        return _isDOTS;
+    }
+
+    #endregion
+    
+    #region Callbacks
 
     // Row and Column need to be swap
     public void SetRowText()
@@ -61,7 +72,7 @@ public class UIController : MonoBehaviour
     {
         textZPos.SetText("Z pos: " + sliderZPos.value);
     }
-    
+
 
     public void OnButtonClick_MonoBehaviour_Spawn()
     {
@@ -75,7 +86,6 @@ public class UIController : MonoBehaviour
 
     public void OnToggle_DOTs_Multithread()
     {
-
         var world = World.DefaultGameObjectInjectionWorld;
         var entityManager = world.EntityManager;
 
@@ -99,11 +109,11 @@ public class UIController : MonoBehaviour
 
         // Clean up the query
         singletonQuery.Dispose();
-        
     }
+
     public void OnButtonClick_Delete()
     {
-        if (_isDots == false)
+        if (_isDOTS == false)
         {
             if (_spawnerMonobehaviour != null)
             {
@@ -112,31 +122,34 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            if (_spawnerDOTs != null)
+            if (_spawnerDOTS != null)
             {
-                _spawnerDOTs.DeleteAllEntities();
+                _spawnerDOTS.DeleteAllEntities();
             }
         }
     }
+
+    #endregion
     
+    #region Private Functions
+
     private void SpawnObjects(bool isDots)
     {
         OnButtonClick_Delete();
-        
-        _isDots = isDots;
+
+        _isDOTS = isDots;
         int row = (int)sliderRow.value;
         int col = (int)sliderCol.value;
         float zPos = sliderZPos.value;
 
         int outCount = row * col;
 
-        subSceneDots.enabled = _isDots;
-        
-        if (_isDots == false)
+        subSceneDots.enabled = _isDOTS;
+
+        if (_isDOTS == false)
         {
-            
-            if(_spawnerMonobehaviour == null)
-                _spawnerMonobehaviour = Object.FindFirstObjectByType<MonoBehaviourPrefabManager>();
+            if (_spawnerMonobehaviour == null)
+                _spawnerMonobehaviour = FindFirstObjectByType<MonoBehaviourPrefabManager>();
 
             _spawnerMonobehaviour.SpawnGroup(row, col, 2.0f, zPos);
         }
@@ -144,57 +157,45 @@ public class UIController : MonoBehaviour
         {
             StartCoroutine(WaitForSubScene(row, col, zPos));
         }
-        
 
-        string typeSpawn = _isDots ? "DOTs" : "Monobehaviour";
-        
+
+        string typeSpawn = _isDOTS ? "DOTs" : "Monobehaviour";
+
         string output = $"Build for {typeSpawn} \n" +
                         $"Size: ({row} , {col}) = {outCount}\n" +
+                        $"Mouse Click to Fire\n" +
                         $"Press <b>Esc</b> to return mouse";
 
         textMessage.SetText(output);
 
         SetFlyCameraActive(true);
     }
-    
 
-    public void SetFlyCameraActive(bool active)
+    private IEnumerator WaitForSubScene(int row, int col, float zPos)
     {
-        flyCamera.enabled = active;
-        canvasGroup.enabled = !active;
-        
-        Cursor.lockState = active?CursorLockMode.Locked : CursorLockMode.None;
-        Cursor.visible = !active;
-    }
-    //public void OnButtonClick_MonoBehaviour_Destroy()
-    IEnumerator WaitForSubScene(int row, int col, float zPos)
-    {
-        
         while (!subSceneDots.IsLoaded)
         {
             yield return null; // Wait for the next frame
         }
         
+        if (_spawnerDOTS == null)
+            _spawnerDOTS = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnCubesSystem>();
 
-        if(_spawnerDOTs == null)
-            _spawnerDOTs = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnCubesSystem>();
-        
-        //Debug.Log(_spawnerDOTs);
-        _spawnerDOTs.SpawnGroup(row, col, 2.0f, zPos, out int outCount, out long outTime);
+        _spawnerDOTS.SpawnGroup(row, col, 2.0f, zPos);
     }
 
-    public void FireBullet(Vector3 position, Vector3 velocity)
+    #endregion
+
+    #region Public Functions
+
+    public void SetFlyCameraActive(bool active)
     {
-        if (subSceneDots.IsLoaded == false)
-        {
-            return;
-        }
-        
-        if(_spawnerDOTs == null)
-            _spawnerDOTs = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnCubesSystem>();
-            
-        //Debug.Log(_spawnerDOTs);
-        _spawnerDOTs.SpawnBullet(position, velocity);
+        flyCamera.enabled = active;
+        canvasGroup.enabled = !active;
+
+        Cursor.lockState = active ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.visible = !active;
     }
 
+    #endregion
 }
