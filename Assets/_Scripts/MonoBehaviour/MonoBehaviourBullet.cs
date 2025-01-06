@@ -1,10 +1,18 @@
-using System;
 using UnityEngine;
 
+/// <summary>
+/// The bullet for the MonoBehaviour
+/// </summary>
 public class MonoBehaviourBullet : MonoBehaviour
 {
+    #region Inspector Fields
+
     public float lifetime = 5f;
     public float speed = 5f;
+
+    #endregion
+
+    #region Unity Functions
 
     private void Start()
     {
@@ -13,11 +21,14 @@ public class MonoBehaviourBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        MonoBehaviourPrefabController monoBehaviourPrefabController = other.GetComponent<MonoBehaviourPrefabController>();
+        MonoBehaviourPrefabCubeController monoBehaviourPrefabCubeController =
+            other.GetComponent<MonoBehaviourPrefabCubeController>();
 
-        if (monoBehaviourPrefabController == null)
+        if (monoBehaviourPrefabCubeController == null)
             return;
 
-        Destroy(monoBehaviourPrefabController.gameObject);
+        Destroy(monoBehaviourPrefabCubeController.gameObject);
     }
+
+    #endregion
 }
