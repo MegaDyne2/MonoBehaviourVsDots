@@ -75,7 +75,7 @@ public class UIController : MonoBehaviour
 
     public void OnToggle_DOTs_Multithread()
     {
-        //Debug.Log("OnToggle_DOTs_Multithread: " + toggleMultiThreaded.isOn);
+
         var world = World.DefaultGameObjectInjectionWorld;
         var entityManager = world.EntityManager;
 
@@ -91,8 +91,6 @@ public class UIController : MonoBehaviour
             var spawnConfig = entityManager.GetComponentData<SpawnCubesConfig>(singletonEntity);
             spawnConfig.useMultiThreading = toggleMultiThreaded.isOn; // Use the bool from the UI
             entityManager.SetComponentData(singletonEntity, spawnConfig);
-
-            //Debug.Log($"UseMultiThreading: {spawnConfig.useMultiThreading}");
         }
         else
         {
@@ -130,8 +128,7 @@ public class UIController : MonoBehaviour
         int col = (int)sliderCol.value;
         float zPos = sliderZPos.value;
 
-        int outCount = 0;
-        long outTime = 0;
+        int outCount = row * col;
 
         subSceneDots.enabled = _isDots;
         
@@ -141,24 +138,19 @@ public class UIController : MonoBehaviour
             if(_spawnerMonobehaviour == null)
                 _spawnerMonobehaviour = Object.FindFirstObjectByType<MonoBehaviourPrefabManager>();
 
-            _spawnerMonobehaviour.SpawnGroup(row, col, 2.0f, zPos, out outCount, out outTime);
+            _spawnerMonobehaviour.SpawnGroup(row, col, 2.0f, zPos);
         }
         else
         {
-
             StartCoroutine(WaitForSubScene(row, col, zPos));
-
-
         }
         
-        outCount = row * col;
 
         string typeSpawn = _isDots ? "DOTs" : "Monobehaviour";
         
         string output = $"Build for {typeSpawn} \n" +
                         $"Size: ({row} , {col}) = {outCount}\n" +
-                        $"Time: {outTime}ms\n" +
-                        $"Press Esc to return mouse";
+                        $"Press <b>Esc</b> to return mouse";
 
         textMessage.SetText(output);
 
