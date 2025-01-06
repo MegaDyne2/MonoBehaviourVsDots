@@ -17,12 +17,12 @@ public class RotatingCubeAuthoring : MonoBehaviour
             
             //Add collision
             // Add a PhysicsCollider (e.g., box collider)
-            var boxCollider = Unity.Physics.BoxCollider.Create(new BoxGeometry
-            {
-                Center = float3.zero,
-                Size = new float3(1, 1, 1)
-            });
-            AddComponent(entity, new PhysicsCollider { Value = boxCollider });
+            // var boxCollider = Unity.Physics.BoxCollider.Create(new BoxGeometry
+            // {
+            //     Center = float3.zero,
+            //     Size = new float3(1, 1, 1)
+            // });
+            //AddComponent(entity, new PhysicsCollider { Value = boxCollider });
             
         }
     }
