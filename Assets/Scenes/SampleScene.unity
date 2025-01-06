@@ -2647,6 +2647,7 @@ MonoBehaviour:
   textMessage: {fileID: 522096313}
   flyCamera: {fileID: 963194229}
   toggleMultiThreaded: {fileID: 487086676}
+  subSceneDots: {fileID: 18829534}
 --- !u!114 &1296366617
 MonoBehaviour:
   m_ObjectHideFlags: 0

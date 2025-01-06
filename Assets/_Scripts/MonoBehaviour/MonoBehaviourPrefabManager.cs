@@ -29,7 +29,8 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
         foreach (var controller in monoBehaviourControllers)
         {
             //Debug.unityLogger.Log($"Normal: {controller.speed} | {Time.deltaTime} | {controller.speed * Time.deltaTime}"); 
-
+            if (controller == null)
+                continue;
             
             controller.transform.Rotate(Vector3.up, controller.speed * Time.deltaTime);
         }
@@ -79,6 +80,9 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
     {
         foreach(Transform child in saveObjects)
         {
+            if (child == null)
+                continue;
+            
             Destroy(child.gameObject);
         }
         saveObjects.Clear();

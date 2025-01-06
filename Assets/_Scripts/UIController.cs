@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using TMPro;
 using Unity.Entities;
+using Unity.Scenes;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -25,6 +27,7 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private Toggle toggleMultiThreaded;
 
+    [SerializeField] private SubScene subSceneDots;
     
     private MonoBehaviourPrefabManager _spawnerMonobehaviour;
     private SpawnCubesSystem _spawnerDOTs;
@@ -125,9 +128,12 @@ public class UIController : MonoBehaviour
 
         int outCount = 0;
         long outTime = 0;
+
+        subSceneDots.enabled = _isDots;
         
         if (_isDots == false)
         {
+            
             if(_spawnerMonobehaviour == null)
                 _spawnerMonobehaviour = Object.FindFirstObjectByType<MonoBehaviourPrefabManager>();
 
@@ -135,10 +141,9 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            if(_spawnerDOTs == null)
-                _spawnerDOTs = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnCubesSystem>();
-            
-            _spawnerDOTs.SpawnGroup(row, col, 2.0f, zPos, out outCount, out outTime);
+
+            StartCoroutine(WaitForSubScene(row, col, zPos));
+
 
         }
         
@@ -154,7 +159,8 @@ public class UIController : MonoBehaviour
         textMessage.SetText(output);
 
         SetFlyCameraActive(true);
-    } 
+    }
+    
 
     public void SetFlyCameraActive(bool active)
     {
@@ -165,5 +171,21 @@ public class UIController : MonoBehaviour
         Cursor.visible = !active;
     }
     //public void OnButtonClick_MonoBehaviour_Destroy()
+    IEnumerator WaitForSubScene(int row, int col, float zPos)
+    {
+        
+        while (!subSceneDots.IsLoaded)
+        {
+            yield return null; // Wait for the next frame
+        }
+        
+
+        if(_spawnerDOTs == null)
+            _spawnerDOTs = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnCubesSystem>();
+            
+        Debug.Log(_spawnerDOTs);
+        _spawnerDOTs.SpawnGroup(row, col, 2.0f, zPos, out int outCount, out long outTime);
+    }
     
+
 }

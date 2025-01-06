@@ -6,6 +6,11 @@ using Unity.Transforms;
 [BurstCompile]
 public partial struct HandleCubesSystem : ISystem
 {
+    public void OnCreate(ref SystemState state)
+    {
+        // Ensure the system only runs if SpawnCubesConfig exists
+        state.RequireForUpdate<SpawnCubesConfig>();
+    }
     public void OnUpdate(ref SystemState state)
     {
         var deltaTime = SystemAPI.Time.DeltaTime;

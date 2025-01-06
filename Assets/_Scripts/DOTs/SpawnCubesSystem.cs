@@ -21,18 +21,37 @@ public partial class SpawnCubesSystem : SystemBase
     protected override void OnCreate()
     {
         RequireForUpdate<SpawnCubesConfig>();
+        this.Enabled = false;
+
     }
 
     protected override void OnUpdate()
     {
+
+        if (this.Enabled == false)
+            return;
+        //SpawnGroup(rowCount, colCount, spacing, distanceZ, out var spawnCount, out var instantiateTime);
+        SpawnGroupWork(rowCount, colCount, spacing, distanceZ);
         this.Enabled = false;
 
-        //SpawnGroup(rowCount, colCount, spacing, distanceZ, out var spawnCount, out var instantiateTime);
-        
     }
 
     public void SpawnGroup(int inRow, int inCol, float inSpacing, float inZ, out int outCount, out long instantiateTime)
     {
+
+        rowCount = inRow;
+        colCount = inCol;
+        distanceZ = inZ;
+        spacing = inSpacing;
+        this.Enabled = true;
+        outCount = 0;
+        instantiateTime = 0;
+
+    }
+
+    public void SpawnGroupWork(int inRow, int inCol, float inSpacing, float inZ)
+    {
+        
         SpawnCubesConfig spawnCubesConfig = SystemAPI.GetSingleton<SpawnCubesConfig>();
 
         float startHeight = - (inRow * inSpacing * 0.5f);  
@@ -72,12 +91,6 @@ public partial class SpawnCubesSystem : SystemBase
         // Log the precise time
         Debug.Log($"Initialized {prefabCount} prefabs in {milliseconds:0.000000} ms");
         
-        instantiateTime = (long)milliseconds;
-        outCount = prefabCount;
-        
-
-        outCount = 0;
-        instantiateTime = 0;
     }
     
     
