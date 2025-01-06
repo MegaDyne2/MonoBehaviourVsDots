@@ -30,7 +30,7 @@ public partial struct HandleCubesSystem : ISystem
         {
             // Single-threaded execution
             foreach (RotatingMovingCubeAspect rotatingMovingCubeAspect in
-                     SystemAPI.Query<RotatingMovingCubeAspect>().WithAll<RotatingCube>())
+                     SystemAPI.Query<RotatingMovingCubeAspect>())
             {
                 rotatingMovingCubeAspect.DoRotate(deltaTime);
             }

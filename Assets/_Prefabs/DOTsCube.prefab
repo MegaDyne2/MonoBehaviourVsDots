@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8086898046389659002}
   - component: {fileID: 8133767636043048897}
   - component: {fileID: 7991910532952137792}
-  - component: {fileID: 6133524732245738575}
   - component: {fileID: -557721287601598013}
   m_Layer: 7
   m_Name: DOTsCube
@@ -124,18 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 90
---- !u!114 &6133524732245738575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005418165147019816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9602161bf799cfb48be03c96b4193b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &-557721287601598013
 Rigidbody:
   m_ObjectHideFlags: 0
