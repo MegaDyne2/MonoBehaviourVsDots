@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
-
+//todo: delete?
 namespace _Scripts
 {
     public partial struct RotatingCubeSystem : ISystem

@@ -9,7 +9,7 @@ public class MovingAuthoring : MonoBehaviour
     {
         public override void Bake(MovingAuthoring authoring)
         {
-            Entity movingAuthoring = GetEntity(TransformUsageFlags.None);
+            Entity movingAuthoring = GetEntity(TransformUsageFlags.Dynamic);
 
             AddComponent(movingAuthoring, new MovingComponent { direction = authoring.direction });
         }

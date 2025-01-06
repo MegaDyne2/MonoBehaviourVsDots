@@ -2,7 +2,7 @@ using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
 
-public class MovingAspect : MonoBehaviour
+public readonly partial struct MovingAspect : IAspect
 {
  
     public readonly RefRW<LocalTransform> localTransform;
