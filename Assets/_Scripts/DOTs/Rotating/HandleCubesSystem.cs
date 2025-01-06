@@ -8,7 +8,6 @@ public partial struct HandleCubesSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
-        // Ensure the system only runs if SpawnCubesConfig exists
         state.RequireForUpdate<SpawnCubesConfig>();
     }
     public void OnUpdate(ref SystemState state)
@@ -17,7 +16,6 @@ public partial struct HandleCubesSystem : ISystem
 
         // Get the threading mode from the SpawnCubesConfig
         var spawnConfig = SystemAPI.GetSingleton<SpawnCubesConfig>();
-
         if (spawnConfig.useMultiThreading)
         {
             // Multi-threaded job execution
@@ -34,7 +32,7 @@ public partial struct HandleCubesSystem : ISystem
             foreach (RotatingMovingCubeAspect rotatingMovingCubeAspect in
                      SystemAPI.Query<RotatingMovingCubeAspect>().WithAll<RotatingCube>())
             {
-                rotatingMovingCubeAspect.MoveAndRotate(deltaTime);
+                rotatingMovingCubeAspect.DoRotate(deltaTime);
             }
         }
     }
