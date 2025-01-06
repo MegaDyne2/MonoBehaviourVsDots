@@ -12,13 +12,13 @@ public partial struct MovingSystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        Debug.Log("9999");
+       // Debug.Log("9999");
         var deltaTime = SystemAPI.Time.DeltaTime;
     
         foreach (MovingAspect rotatingMovingCubeAspect in
                  SystemAPI.Query<MovingAspect>().WithAll<MovingComponent>())
         {
-            Debug.Log("sdfsd");
+            //Debug.Log("sdfsd");
 
             rotatingMovingCubeAspect.Move(deltaTime);
         }

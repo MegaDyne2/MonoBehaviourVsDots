@@ -89,7 +89,7 @@ public partial class SpawnCubesSystem : SystemBase
         double milliseconds = (double)stopwatch.ElapsedTicks / Stopwatch.Frequency * 1000.0;
 
         // Log the precise time
-        Debug.Log($"Initialized {prefabCount} prefabs in {milliseconds:0.000000} ms");
+       // Debug.Log($"Initialized {prefabCount} prefabs in {milliseconds:0.000000} ms");
         
     }
 

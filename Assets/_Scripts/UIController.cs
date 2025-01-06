@@ -75,7 +75,7 @@ public class UIController : MonoBehaviour
 
     public void OnToggle_DOTs_Multithread()
     {
-        Debug.Log("OnToggle_DOTs_Multithread: " + toggleMultiThreaded.isOn);
+        //Debug.Log("OnToggle_DOTs_Multithread: " + toggleMultiThreaded.isOn);
         var world = World.DefaultGameObjectInjectionWorld;
         var entityManager = world.EntityManager;
 
@@ -92,7 +92,7 @@ public class UIController : MonoBehaviour
             spawnConfig.useMultiThreading = toggleMultiThreaded.isOn; // Use the bool from the UI
             entityManager.SetComponentData(singletonEntity, spawnConfig);
 
-            Debug.Log($"UseMultiThreading: {spawnConfig.useMultiThreading}");
+            //Debug.Log($"UseMultiThreading: {spawnConfig.useMultiThreading}");
         }
         else
         {
@@ -186,8 +186,8 @@ public class UIController : MonoBehaviour
 
         if(_spawnerDOTs == null)
             _spawnerDOTs = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnCubesSystem>();
-            
-        Debug.Log(_spawnerDOTs);
+        
+        //Debug.Log(_spawnerDOTs);
         _spawnerDOTs.SpawnGroup(row, col, 2.0f, zPos, out int outCount, out long outTime);
     }
 
@@ -201,7 +201,7 @@ public class UIController : MonoBehaviour
         if(_spawnerDOTs == null)
             _spawnerDOTs = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnCubesSystem>();
             
-        Debug.Log(_spawnerDOTs);
+        //Debug.Log(_spawnerDOTs);
         _spawnerDOTs.SpawnBullet(position, velocity);
     }
 

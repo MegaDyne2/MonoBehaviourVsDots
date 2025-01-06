@@ -29,6 +29,6 @@ public class MonoBehaviourBullet : MonoBehaviour
         Rigidbody rb = GetComponent<Rigidbody>();
 
             
-        Debug.Log( rb.linearVelocity);
+        //Debug.Log( rb.linearVelocity);
     }
 }
