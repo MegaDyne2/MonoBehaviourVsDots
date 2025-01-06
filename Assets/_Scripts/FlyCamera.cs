@@ -40,6 +40,7 @@ public class FlyCamera : MonoBehaviour
             Rigidbody rb = go.GetComponent<Rigidbody>();
             
             rb.linearVelocity = transform.TransformDirection(Vector3.forward) * bullet.speed;
+            
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))

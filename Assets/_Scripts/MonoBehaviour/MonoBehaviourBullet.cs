@@ -18,6 +18,17 @@ public class MonoBehaviourBullet : MonoBehaviour
         if (monoBehaviourPrefabController == null)
             return;
 
-        monoBehaviourPrefabController.speed *= -2;
+        Destroy(monoBehaviourPrefabController.gameObject);
+        //monoBehaviourPrefabController.speed *= -2;
+        
+        
+    }
+
+    private void Update()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+            
+        Debug.Log( rb.linearVelocity);
     }
 }

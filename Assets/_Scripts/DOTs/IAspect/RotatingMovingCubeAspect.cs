@@ -17,6 +17,7 @@ public readonly partial struct RotatingMovingCubeAspect : IAspect
     {
         //Debug.unityLogger.Log($"Dots: {rotateSpeed.ValueRO.value} | {deltaTime} | {rotateSpeed.ValueRO.value * deltaTime}");
         localTransform.ValueRW = localTransform.ValueRO.RotateY(math.radians(rotateSpeed.ValueRO.value * deltaTime));
+       // localTransform.ValueRW = localTransform.ValueRO.Translate(movement.ValueRO.movementVector * deltaTime);
 
     }
 }
