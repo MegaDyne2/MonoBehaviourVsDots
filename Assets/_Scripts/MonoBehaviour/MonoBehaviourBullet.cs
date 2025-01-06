@@ -19,16 +19,5 @@ public class MonoBehaviourBullet : MonoBehaviour
             return;
 
         Destroy(monoBehaviourPrefabController.gameObject);
-        //monoBehaviourPrefabController.speed *= -2;
-        
-        
-    }
-
-    private void Update()
-    {
-        Rigidbody rb = GetComponent<Rigidbody>();
-
-            
-        //Debug.Log( rb.linearVelocity);
     }
 }

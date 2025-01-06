@@ -13,8 +13,7 @@ public partial struct HandleCubesSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         var deltaTime = SystemAPI.Time.DeltaTime;
-
-        // Get the threading mode from the SpawnCubesConfig
+        
         var spawnConfig = SystemAPI.GetSingleton<SpawnCubesConfig>();
         if (spawnConfig.useMultiThreading)
         {
@@ -23,7 +22,6 @@ public partial struct HandleCubesSystem : ISystem
             {
                 DeltaTime = deltaTime
             };
-
             state.Dependency = job.ScheduleParallel(state.Dependency);
         }
         else
@@ -37,7 +35,6 @@ public partial struct HandleCubesSystem : ISystem
         }
     }
 }
-
 
 [BurstCompile]
 public partial struct HandleCubesJob : IJobEntity
