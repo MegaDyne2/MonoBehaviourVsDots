@@ -31,10 +31,14 @@ public class UIController : MonoBehaviour
     
     private MonoBehaviourPrefabManager _spawnerMonobehaviour;
     private SpawnCubesSystem _spawnerDOTs;
-    
+ 
     
     private bool _isDots = false;
 
+    public bool IsDots()
+    {
+        return _isDots;
+    }
     private void Awake()
     {
         SetRowText();
@@ -186,6 +190,19 @@ public class UIController : MonoBehaviour
         Debug.Log(_spawnerDOTs);
         _spawnerDOTs.SpawnGroup(row, col, 2.0f, zPos, out int outCount, out long outTime);
     }
-    
+
+    public void FireBullet(Vector3 position, Vector3 velocity)
+    {
+        if (subSceneDots.IsLoaded == false)
+        {
+            return;
+        }
+        
+        if(_spawnerDOTs == null)
+            _spawnerDOTs = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnCubesSystem>();
+            
+        Debug.Log(_spawnerDOTs);
+        _spawnerDOTs.SpawnBullet(position, velocity);
+    }
 
 }

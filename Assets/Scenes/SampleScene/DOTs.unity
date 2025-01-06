@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DOTsBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 1100959871648608165, guid: 66bbfc2337c08e049917a3a84b72e3d2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5271192242844222479, guid: 66bbfc2337c08e049917a3a84b72e3d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.5

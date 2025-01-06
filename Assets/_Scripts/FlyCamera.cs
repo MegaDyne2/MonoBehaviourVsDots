@@ -35,12 +35,18 @@ public class FlyCamera : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            GameObject go = Instantiate(prefabBullet, transform.position, Quaternion.identity);
-            MonoBehaviourBullet bullet = go.GetComponent<MonoBehaviourBullet>();
-            Rigidbody rb = go.GetComponent<Rigidbody>();
-            
-            rb.linearVelocity = transform.TransformDirection(Vector3.forward) * bullet.speed;
-            
+            if (uIController.IsDots())
+            {
+                uIController.FireBullet(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f);
+            }
+            else
+            {
+                GameObject go = Instantiate(prefabBullet, transform.position, Quaternion.identity);
+                MonoBehaviourBullet bullet = go.GetComponent<MonoBehaviourBullet>();
+                Rigidbody rb = go.GetComponent<Rigidbody>();
+
+                rb.linearVelocity = transform.TransformDirection(Vector3.forward) * bullet.speed;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))

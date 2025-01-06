@@ -92,7 +92,22 @@ public partial class SpawnCubesSystem : SystemBase
         Debug.Log($"Initialized {prefabCount} prefabs in {milliseconds:0.000000} ms");
         
     }
-    
+
+    public void SpawnBullet(Vector3 position, Vector3 velocity)
+    {
+        SpawnBulletsConfig spawnCubesConfig = SystemAPI.GetSingleton<SpawnBulletsConfig>();
+        
+        Entity spawnedEntity = EntityManager.Instantiate(spawnCubesConfig.bulletEntity);
+        
+        LocalTransform localTransform = SystemAPI.GetComponent<LocalTransform>(spawnedEntity);
+        localTransform.Position = position;
+        SystemAPI.SetComponent(spawnedEntity, localTransform);
+        
+        var movingComponent = SystemAPI.GetComponent<MovingComponent>(spawnedEntity);
+        movingComponent.direction = velocity;
+        SystemAPI.SetComponent(spawnedEntity, movingComponent);
+        
+    }
     
     public void DeleteAllEntities()
     {

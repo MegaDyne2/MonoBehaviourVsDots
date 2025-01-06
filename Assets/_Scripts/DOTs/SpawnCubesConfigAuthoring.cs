@@ -8,7 +8,8 @@ public class SpawnCubesConfigAuthoring : MonoBehaviour
     public bool useMultithreading = false;
     
     public int amountToSpawn;
-    
+
+    public GameObject dotsBullets;
     
     
     public class Baker : Baker<SpawnCubesConfigAuthoring>
@@ -23,6 +24,11 @@ public class SpawnCubesConfigAuthoring : MonoBehaviour
                 useMultiThreading = authoring.useMultithreading // Set the field
 
             });
+            
+            AddComponent(entity, new SpawnBulletsConfig
+            {
+                bulletEntity = GetEntity(authoring.dotsBullets,TransformUsageFlags.Dynamic),
+            });
         }
     }
     
@@ -33,4 +39,9 @@ public struct SpawnCubesConfig : IComponentData
 {
     public Entity cubePrefabEntity;
     public bool useMultiThreading;
+}
+
+public struct SpawnBulletsConfig : IComponentData
+{
+    public Entity bulletEntity;
 }
