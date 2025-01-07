@@ -1,11 +1,15 @@
 using Unity.Entities;
 
+/// <summary>
+/// System for Lifetime. when Entity with the component Lifetime reach Zero delete it.
+/// </summary>
 public partial struct LifetimeSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
     {
         float deltaTime = SystemAPI.Time.DeltaTime;
 
+        //cannot delete this with SystemAPI
         var ecb = new EntityCommandBuffer(state.WorldUpdateAllocator);
         
         foreach (var (lifetime, entity) in SystemAPI.Query<RefRW<Lifetime>>().WithEntityAccess())

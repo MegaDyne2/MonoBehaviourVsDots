@@ -1,9 +1,14 @@
 using Unity.Entities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// This is use for the Object to translate to a new location
+/// </summary>
 public class MovingAuthoring : MonoBehaviour
 {
-    public Vector3 direction;
+    //rename for clarity. the speed will also be applied here along with direction
+    [FormerlySerializedAs("direction")] public Vector3 velocity;
 
     private class Baker : Baker<MovingAuthoring>
     {
@@ -11,12 +16,12 @@ public class MovingAuthoring : MonoBehaviour
         {
             Entity movingAuthoring = GetEntity(TransformUsageFlags.Dynamic);
 
-            AddComponent(movingAuthoring, new MovingComponent { direction = authoring.direction });
+            AddComponent(movingAuthoring, new MovingComponent { velocity = authoring.velocity });
         }
     }
 }
 
 public struct MovingComponent : IComponentData
 {
-    public Vector3 direction;
+    public Vector3 velocity;
 }

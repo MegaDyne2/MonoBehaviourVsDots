@@ -1,6 +1,9 @@
 using Unity.Entities;
 using UnityEngine;
 
+/// <summary>
+/// After lifetime runs out it will delete the entity
+/// </summary>
 public class LifetimeAuthoring : MonoBehaviour
 {
     public float lifetime = 5.0f;
@@ -11,7 +14,10 @@ public class LifetimeAuthoring : MonoBehaviour
         {
             Entity lifetimeAuthoring = GetEntity(TransformUsageFlags.Dynamic);
 
-            AddComponent(lifetimeAuthoring, new Lifetime { TimeRemaining = authoring.lifetime });
+            AddComponent(lifetimeAuthoring, new Lifetime
+            {
+                TimeRemaining = authoring.lifetime
+            });
         }
     }
 }

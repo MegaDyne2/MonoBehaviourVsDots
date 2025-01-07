@@ -4,7 +4,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 [BurstCompile]
-public partial struct HandleCubesSystem : ISystem
+public partial struct RotateCubesSystem : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
@@ -15,6 +15,7 @@ public partial struct HandleCubesSystem : ISystem
         var deltaTime = SystemAPI.Time.DeltaTime;
         
         var spawnConfig = SystemAPI.GetSingleton<SpawnCubesConfig>();
+        
         if (spawnConfig.useMultiThreading)
         {
             // Multi-threaded job execution

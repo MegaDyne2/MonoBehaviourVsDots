@@ -26,7 +26,7 @@ public class FlyCamera : MonoBehaviour
 
     private float yaw = 0f;
     private float pitch = 0f;
-    private SpawnCubesSystem _spawnerDOTS;
+    private SpawnEntitiesSystem _spawnerDOTS;
     #endregion
 
     #region Unity Functions
@@ -76,7 +76,7 @@ public class FlyCamera : MonoBehaviour
                 }
 
                 if (_spawnerDOTS == null)
-                    _spawnerDOTS = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnCubesSystem>();
+                    _spawnerDOTS = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnEntitiesSystem>();
 
                 _spawnerDOTS.SpawnBullet(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f);
                 
@@ -94,7 +94,8 @@ public class FlyCamera : MonoBehaviour
 
     private void HandleEscapeToTurnOffFlyCamera()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        //added Right mouse button. still leave in Escape in case Mac mouse is still 1 button.
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Mouse1))
         {
             uIController.SetFlyCameraActive(false);
         }

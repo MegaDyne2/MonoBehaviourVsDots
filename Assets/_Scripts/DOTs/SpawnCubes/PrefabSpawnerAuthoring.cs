@@ -1,37 +1,33 @@
 using Unity.Entities;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class SpawnCubesConfigAuthoring : MonoBehaviour
+public class PrefabSpawnerAuthoring : MonoBehaviour
 {
+    [FormerlySerializedAs("cubePrefab")] public GameObject prefabMonoBehaviour;
+    [FormerlySerializedAs("dotsBullets")] public GameObject prefabBulletDOTS;
 
-    public GameObject cubePrefab;
     public bool useMultithreading = false;
-    
-    public int amountToSpawn;
 
-    public GameObject dotsBullets;
-    
-    
-    public class Baker : Baker<SpawnCubesConfigAuthoring>
+
+    public class Baker : Baker<PrefabSpawnerAuthoring>
     {
-        public override void Bake(SpawnCubesConfigAuthoring authoring)
+        public override void Bake(PrefabSpawnerAuthoring authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.None);
-            
+
             AddComponent(entity, new SpawnCubesConfig
             {
-                cubePrefabEntity = GetEntity(authoring.cubePrefab,TransformUsageFlags.Dynamic),
+                cubePrefabEntity = GetEntity(authoring.prefabMonoBehaviour, TransformUsageFlags.Dynamic),
                 useMultiThreading = authoring.useMultithreading // Set the field
-
             });
-            
+
             AddComponent(entity, new SpawnBulletsConfig
             {
-                bulletEntity = GetEntity(authoring.dotsBullets,TransformUsageFlags.Dynamic),
+                bulletEntity = GetEntity(authoring.prefabBulletDOTS, TransformUsageFlags.Dynamic),
             });
         }
     }
-    
 }
 
 

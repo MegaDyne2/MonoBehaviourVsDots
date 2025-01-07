@@ -1,17 +1,21 @@
 using UnityEngine;
 using Unity.Entities;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// From "Freedom Coding"
+/// </summary>
 public class TriggerAuthoring : MonoBehaviour
 {
-    public float size;
+    [FormerlySerializedAs("size")] public float radianSize;
 
-    public class TriggerBaker : Baker<TriggerAuthoring>
+    public class Baker : Baker<TriggerAuthoring>
     {
         public override void Bake(TriggerAuthoring authoring)
         {
             Entity triggerAuthoring = GetEntity(TransformUsageFlags.None);
 
-            AddComponent(triggerAuthoring, new TriggerComponent { size = authoring.size });
+            AddComponent(triggerAuthoring, new SphereTriggerComponent { RadianSize = authoring.radianSize });
         }
     }
 }

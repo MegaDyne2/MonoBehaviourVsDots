@@ -29,7 +29,7 @@ public class UIController : MonoBehaviour
     #region Private Variables
 
     private MonoBehaviourPrefabManager _spawnerMonobehaviour;
-    private SpawnCubesSystem _spawnerDOTS;
+    private SpawnEntitiesSystem _spawnerDOTS;
     private bool _isDOTS = false;
 
     #endregion
@@ -124,7 +124,7 @@ public class UIController : MonoBehaviour
         {
             if (_spawnerDOTS != null)
             {
-                _spawnerDOTS.DeleteAllEntities();
+                _spawnerDOTS.DeleteAllCubes();
             }
         }
     }
@@ -179,7 +179,7 @@ public class UIController : MonoBehaviour
         }
         
         if (_spawnerDOTS == null)
-            _spawnerDOTS = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnCubesSystem>();
+            _spawnerDOTS = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnEntitiesSystem>();
 
         _spawnerDOTS.SpawnGroup(row, col, 2.0f, zPos);
     }
