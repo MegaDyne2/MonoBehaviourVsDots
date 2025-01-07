@@ -61,12 +61,12 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
 
     public void DeleteAllChildren()
     {
-        foreach (Transform child in _saveObjects)
+        foreach (Transform transformSavedObject in _saveObjects)
         {
-            if (child == null)
+            if (transformSavedObject == null)
                 continue;
 
-            Destroy(child.gameObject);
+            Destroy(transformSavedObject.gameObject);
         }
 
         _saveObjects.Clear();
