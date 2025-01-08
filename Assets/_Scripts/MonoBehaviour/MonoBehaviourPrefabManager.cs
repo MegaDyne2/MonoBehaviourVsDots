@@ -15,8 +15,7 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
     public GameObject prefabMono;
     
     #endregion
-
-
+    
     #region Links
 
     [SerializeField] Toggle toggleMultithreaded;
@@ -26,10 +25,8 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
     #region Private Varibles
 
     //Keeping track of the saved Object and it's scripts
-    private readonly List<Transform> _saveObjects = new();
     private readonly List<MonoBehaviourPrefabCubeController> _monoBehaviourControllers = new();
-
-    //private NativeArray<float3> _positions;
+    
     private NativeArray<quaternion> _rotations;
     private NativeArray<float> _rotationSpeeds;
     
@@ -85,8 +82,7 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
                 go.transform.SetLocalPositionAndRotation(
                     new Vector3(startWidth + (inSpacing * j), startHeight + (inSpacing * i), inZ),
                     Quaternion.identity);
-
-                _saveObjects.Add(go.transform);
+                
                 _monoBehaviourControllers.Add(go.GetComponent<MonoBehaviourPrefabCubeController>());
             }
         }
@@ -107,8 +103,7 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
 
             Destroy(transformSavedObject.gameObject);
         }
-
-        _saveObjects.Clear();
+        
         _monoBehaviourControllers.Clear();
 
         Jobs_DeleteNativeArray();
@@ -175,14 +170,12 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
     
     private void Jobs_CreateNativeArray(int count)
     {
-        //_positions = new NativeArray<float3>(count, Allocator.Persistent);
         _rotations = new NativeArray<quaternion>(count, Allocator.Persistent);
         _rotationSpeeds = new NativeArray<float>(count, Allocator.Persistent);
     }
 
     private void Jobs_DeleteNativeArray()
     {
-        //_positions.Dispose();
         if (_rotations.IsCreated)
         {
             _rotations.Dispose();

@@ -24,8 +24,8 @@ public class FlyCamera : MonoBehaviour
 
     #region Private Variable
 
-    private float yaw = 0f;
-    private float pitch = 0f;
+    private float _yaw = 0f;
+    private float _pitch = 0f;
     private SpawnEntitiesSystem _spawnerDots;
     #endregion
 
@@ -45,10 +45,10 @@ public class FlyCamera : MonoBehaviour
     private void HandleMouseLook()
     {
         // Mouse look
-        yaw += Input.GetAxis("Mouse X") * lookSpeed;
-        pitch -= Input.GetAxis("Mouse Y") * lookSpeed;
-        pitch = Mathf.Clamp(pitch, -90f, 90f);
-        transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
+        _yaw += Input.GetAxis("Mouse X") * lookSpeed;
+        _pitch -= Input.GetAxis("Mouse Y") * lookSpeed;
+        _pitch = Mathf.Clamp(_pitch, -90f, 90f);
+        transform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
     }
 
     private void HandleMouseLookAndKeyboardMovement()
