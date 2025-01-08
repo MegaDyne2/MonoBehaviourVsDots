@@ -19,7 +19,8 @@ public class FlyCamera : MonoBehaviour
 
     public float speed = 10f; // Movement speed
     public float lookSpeed = 2f; // Look sensitivity
-
+    public float bulletSpeed = 100f;
+    
     #endregion
 
     #region Private Variable
@@ -72,7 +73,7 @@ public class FlyCamera : MonoBehaviour
                 if (_spawnerDots == null)
                     _spawnerDots = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnEntitiesSystem>();
 
-                _spawnerDots.SpawnBullet(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f);
+                _spawnerDots.SpawnBullet(transform.position, transform.TransformDirection(Vector3.forward) * bulletSpeed);
                 
             }
             else
@@ -81,7 +82,7 @@ public class FlyCamera : MonoBehaviour
                 MonoBehaviourBullet bullet = go.GetComponent<MonoBehaviourBullet>();
                 Rigidbody rb = go.GetComponent<Rigidbody>();
 
-                rb.linearVelocity = transform.TransformDirection(Vector3.forward) * bullet.speed;
+                rb.linearVelocity = transform.TransformDirection(Vector3.forward) * bulletSpeed;
             }
         }
     }

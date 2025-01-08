@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -8,7 +10,12 @@ public class MonoBehaviourBullet : MonoBehaviour
     #region Inspector Fields
 
     public float lifetime = 5f;
-    public float speed = 5f;
+
+    #endregion
+
+    #region Static Fields
+
+    private static readonly List<MonoBehaviourBullet> ListBullets = new();
 
     #endregion
 
@@ -16,7 +23,13 @@ public class MonoBehaviourBullet : MonoBehaviour
 
     private void Start()
     {
+        ListBullets.Add(this);
         Destroy(gameObject, lifetime);
+    }
+
+    public void OnDestroy()
+    {
+        ListBullets.Remove(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,6 +41,20 @@ public class MonoBehaviourBullet : MonoBehaviour
             return;
 
         Destroy(monoBehaviourPrefabCubeController.gameObject);
+    }
+
+    #endregion
+
+    #region Static Functions
+
+    public static void DeleteAllBullets()
+    {
+        foreach (var currentBullet in ListBullets)
+        {
+            Destroy(currentBullet.gameObject);
+        }
+
+        ListBullets.Clear();
     }
 
     #endregion

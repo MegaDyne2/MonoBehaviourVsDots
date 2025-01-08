@@ -106,6 +106,9 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
         
         _monoBehaviourControllers.Clear();
 
+        //delete all bullets as well
+        MonoBehaviourBullet.DeleteAllBullets();
+        
         Jobs_DeleteNativeArray();
     }
 

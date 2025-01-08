@@ -14,6 +14,7 @@ public partial class SpawnEntitiesSystem : SystemBase
     private float _distanceZ = 100.0f;
     private float _spacing = 2f;
     private readonly List<Entity> _spawnedCubes = new();
+    private readonly List<Entity> _spawnedBullets = new();
 
     #endregion
 
@@ -62,6 +63,8 @@ public partial class SpawnEntitiesSystem : SystemBase
         var movingComponent = SystemAPI.GetComponent<MovingComponent>(spawnedEntity);
         movingComponent.velocity = velocity;
         SystemAPI.SetComponent(spawnedEntity, movingComponent);
+        
+        _spawnedBullets.Add(spawnedEntity);
     }
 
     public void DeleteAllCubes()
@@ -73,9 +76,20 @@ public partial class SpawnEntitiesSystem : SystemBase
                 EntityManager.DestroyEntity(entity);
             }
         }
-
+        
         // Clear the list after deletion
         _spawnedCubes.Clear();
+        
+        //Delete the bullets too
+        foreach (var currentBullet in _spawnedBullets)
+        {
+            if (EntityManager.Exists(currentBullet))
+            {
+                EntityManager.DestroyEntity(currentBullet);
+            }
+        }
+        _spawnedBullets.Clear();
+        
     }
 
     #endregion
