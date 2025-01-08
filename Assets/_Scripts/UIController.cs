@@ -33,7 +33,6 @@ public class UIController : MonoBehaviour
 
     private MonoBehaviourPrefabManager _spawnerMonoBehaviour;
     private SpawnEntitiesSystem _spawnerDots;
-    private bool _isDots = false;
     private int _row = 0;
     private int _col = 0;
     #endregion
@@ -54,15 +53,6 @@ public class UIController : MonoBehaviour
     private void Update()
     {
         HandleEscapeToTurnOffFlyCamera();
-    }
-
-    #endregion
-    
-    #region Accessors
-
-    public bool IsDOTS()
-    {
-        return _isDots;
     }
 
     #endregion
@@ -101,8 +91,6 @@ public class UIController : MonoBehaviour
     {
         SpawnObjects(true);
     }
-
-
     
     public void OnToggle_DOTs_Multithread()
     {
@@ -133,7 +121,7 @@ public class UIController : MonoBehaviour
     {
         _row = 0;
         _col = 0;
-        if (_isDots == false)
+        if (Global.IsDots == false)
         {
             if (_spawnerMonoBehaviour != null)
             {
@@ -161,22 +149,15 @@ public class UIController : MonoBehaviour
             return;
         }
         
-        string typeSpawn = _isDots ? "DOTS" : "Monobehaviour";
+        string typeSpawn = Global.IsDots ? "DOTS" : "Monobehaviour";
 
         string output = $"Build for {typeSpawn} \n" +
                         $"Size: ({_row} , {_col}) = {count}\n" +
-                        $"Mouse Click to Fire\n" +
+                        $"Mouse Left Click to Fire\n" +
                         $"Press <b>Esc</b> to return mouse\n";
 
         
         string multiThreaded = toggleMultiThreaded.isOn ?  "Using Multi thread\n" : "Using Single thread\n";
-
-        if (_isDots == false)
-        {
-            multiThreaded += "<color=red>MonoBehavior's transform\n" +
-                             "cannot be multi thread\n" +
-                             "Unity Limitation\n";
-        }
         
         textMessage.SetText(output + multiThreaded);
     }
@@ -189,17 +170,19 @@ public class UIController : MonoBehaviour
     {
         OnButtonClick_Delete();
 
-        _isDots = isDots;
+        Global.IsDots = isDots;
         int row = (int)sliderRow.value;
         int col = (int)sliderCol.value;
         float zPos = sliderZPos.value;
 
         int outCount = row * col;
 
-        subSceneDots.enabled = _isDots;
+        subSceneDots.enabled = Global.IsDots;
 
-        if (_isDots == false)
+        if (Global.IsDots == false)
         {
+            //using regular Monobehaviour
+            
             if (_spawnerMonoBehaviour == null)
                 _spawnerMonoBehaviour = FindFirstObjectByType<MonoBehaviourPrefabManager>();
 
@@ -207,7 +190,10 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(WaitForSubScene(row, col, zPos));
+            if (_spawnerDots == null)
+                _spawnerDots = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnEntitiesSystem>();
+
+            _spawnerDots.SpawnGroup(row, col, 2.0f, zPos);
         }
 
         _row = row;
@@ -216,21 +202,6 @@ public class UIController : MonoBehaviour
         DisplayMessage();
 
         SetFlyCameraActive(true);
-    }
-
-
-    private IEnumerator WaitForSubScene(int row, int col, float zPos)
-    {
-        //This has 
-        //while (!subSceneDots.IsLoaded)
-        {
-            yield return null; // Wait for the next frame
-        }
-        
-        if (_spawnerDots == null)
-            _spawnerDots = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnEntitiesSystem>();
-
-        _spawnerDots.SpawnGroup(row, col, 2.0f, zPos);
     }
 
     private void HandleEscapeToTurnOffFlyCamera()

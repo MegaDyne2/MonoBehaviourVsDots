@@ -67,7 +67,7 @@ public class FlyCamera : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (uIController.IsDOTS())
+            if (Global.IsDots)
             {
                 if (_spawnerDots == null)
                     _spawnerDots = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnEntitiesSystem>();
