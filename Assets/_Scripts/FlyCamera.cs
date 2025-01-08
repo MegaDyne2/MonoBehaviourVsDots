@@ -35,7 +35,6 @@ public class FlyCamera : MonoBehaviour
     {
         HandleMouseLook();
         HandleMouseLookAndKeyboardMovement();
-        HandleEscapeToTurnOffFlyCamera();
         HandleMouseFireButton();
     }
 
@@ -87,14 +86,7 @@ public class FlyCamera : MonoBehaviour
         }
     }
 
-    private void HandleEscapeToTurnOffFlyCamera()
-    {
-        //added Right mouse button. still leave in Escape in case Mac mouse is still 1 button.
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            uIController.SetFlyCameraActive(false);
-        }
-    }
+
 
     #endregion
 }

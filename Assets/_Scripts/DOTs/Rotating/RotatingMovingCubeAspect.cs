@@ -7,9 +7,10 @@ public readonly partial struct RotatingMovingCubeAspect : IAspect
 {
     public readonly RefRW<LocalTransform> localTransform;
     public readonly RefRO<RotateSpeed> rotateSpeed;
-
+    
     public void DoRotate(float deltaTime)
     {
-        localTransform.ValueRW = localTransform.ValueRO.RotateY(math.radians(rotateSpeed.ValueRO.value * deltaTime));
+        localTransform.ValueRW.Rotation = Global.CalculateNewRotation(rotateSpeed.ValueRO.value, localTransform.ValueRW.Rotation, deltaTime, Global.IterationCount);
     }
+
 }

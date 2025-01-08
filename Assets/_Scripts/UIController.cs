@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using Unity.Entities;
@@ -19,6 +20,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textCol;
     [SerializeField] private Slider sliderZPos;
     [SerializeField] private TextMeshProUGUI textZPos;
+    [SerializeField] private Slider sliderCPU;
+    [SerializeField] private TextMeshProUGUI textCPU;
     [SerializeField] private TextMeshProUGUI textMessage;
     [SerializeField] private FlyCamera flyCamera;
     [SerializeField] private Toggle toggleMultiThreaded;
@@ -31,7 +34,8 @@ public class UIController : MonoBehaviour
     private MonoBehaviourPrefabManager _spawnerMonoBehaviour;
     private SpawnEntitiesSystem _spawnerDots;
     private bool _isDots = false;
-
+    private int _row = 0;
+    private int _col = 0;
     #endregion
 
     #region Unity Functions
@@ -42,6 +46,14 @@ public class UIController : MonoBehaviour
         SetRowText();
         SetColText();
         SetZPosText();
+        SetCPUText();
+        DisplayMessage();
+    }
+
+
+    private void Update()
+    {
+        HandleEscapeToTurnOffFlyCamera();
     }
 
     #endregion
@@ -73,6 +85,12 @@ public class UIController : MonoBehaviour
         textZPos.SetText("Z pos: " + sliderZPos.value);
     }
 
+    public void SetCPUText()
+    {
+        textCPU.SetText("CPU Load: " + sliderCPU.value);
+        Global.IterationCount = (int)sliderCPU.value;
+    }
+
 
     public void OnButtonClick_MonoBehaviour_Spawn()
     {
@@ -84,6 +102,8 @@ public class UIController : MonoBehaviour
         SpawnObjects(true);
     }
 
+
+    
     public void OnToggle_DOTs_Multithread()
     {
         var world = World.DefaultGameObjectInjectionWorld;
@@ -102,17 +122,17 @@ public class UIController : MonoBehaviour
             spawnConfig.useMultiThreading = toggleMultiThreaded.isOn; // Use the bool from the UI
             entityManager.SetComponentData(singletonEntity, spawnConfig);
         }
-        else
-        {
-            Debug.LogError("SpawnCubesConfig singleton entity not found!");
-        }
 
         // Clean up the query
         singletonQuery.Dispose();
+        
+        Global.IsMultiThreaded = toggleMultiThreaded.isOn;
     }
 
     public void OnButtonClick_Delete()
     {
+        _row = 0;
+        _col = 0;
         if (_isDots == false)
         {
             if (_spawnerMonoBehaviour != null)
@@ -127,6 +147,38 @@ public class UIController : MonoBehaviour
                 _spawnerDots.DeleteAllCubes();
             }
         }
+        DisplayMessage();
+    }
+    
+    
+    public void DisplayMessage()
+    {
+        int count = _row * _col;
+
+        if (count == 0)
+        {
+            textMessage.SetText("Please Spawn Cubes");
+            return;
+        }
+        
+        string typeSpawn = _isDots ? "DOTS" : "Monobehaviour";
+
+        string output = $"Build for {typeSpawn} \n" +
+                        $"Size: ({_row} , {_col}) = {count}\n" +
+                        $"Mouse Click to Fire\n" +
+                        $"Press <b>Esc</b> to return mouse\n";
+
+        
+        string multiThreaded = toggleMultiThreaded.isOn ?  "Using Multi thread\n" : "Using Single thread\n";
+
+        if (_isDots == false)
+        {
+            multiThreaded += "<color=red>MonoBehavior's transform\n" +
+                             "cannot be multi thread\n" +
+                             "Unity Limitation\n";
+        }
+        
+        textMessage.SetText(output + multiThreaded);
     }
 
     #endregion
@@ -158,18 +210,14 @@ public class UIController : MonoBehaviour
             StartCoroutine(WaitForSubScene(row, col, zPos));
         }
 
-
-        string typeSpawn = _isDots ? "DOTS" : "Monobehaviour";
-
-        string output = $"Build for {typeSpawn} \n" +
-                        $"Size: ({row} , {col}) = {outCount}\n" +
-                        $"Mouse Click to Fire\n" +
-                        $"Press <b>Esc</b> to return mouse";
-
-        textMessage.SetText(output);
+        _row = row;
+        _col = col;
+        
+        DisplayMessage();
 
         SetFlyCameraActive(true);
     }
+
 
     private IEnumerator WaitForSubScene(int row, int col, float zPos)
     {
@@ -185,6 +233,24 @@ public class UIController : MonoBehaviour
         _spawnerDots.SpawnGroup(row, col, 2.0f, zPos);
     }
 
+    private void HandleEscapeToTurnOffFlyCamera()
+    {
+        if (flyCamera.enabled == true)
+        {
+            //added Right mouse button. still leave in Escape in case Mac mouse is still 1 button.
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                SetFlyCameraActive(false);
+            }
+        }
+        else
+        {
+            if(Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                SetFlyCameraActive(true);
+            }
+        }
+    }
     #endregion
 
     #region Public Functions
@@ -198,5 +264,6 @@ public class UIController : MonoBehaviour
         Cursor.visible = !active;
     }
 
+    
     #endregion
 }

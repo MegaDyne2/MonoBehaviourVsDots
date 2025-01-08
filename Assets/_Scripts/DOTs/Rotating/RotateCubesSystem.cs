@@ -41,9 +41,12 @@ public partial struct RotateCubesSystem : ISystem
 public partial struct HandleCubesJob : IJobEntity
 {
     public float DeltaTime;
-
+    public int IterationCount;
     public void Execute(ref LocalTransform localTransform, in RotateSpeed rotateSpeed)
     {
-        localTransform = localTransform.RotateY(math.radians(rotateSpeed.value * DeltaTime));
+        quaternion rotation = localTransform.Rotation;
+        quaternion newQuaternion = Global.CalculateNewRotation(rotateSpeed.value, rotation, DeltaTime, IterationCount);
+        localTransform.Rotation = newQuaternion;
+
     }
 }

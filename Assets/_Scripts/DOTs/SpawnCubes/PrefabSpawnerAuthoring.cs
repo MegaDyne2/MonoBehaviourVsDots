@@ -6,20 +6,17 @@ public class PrefabSpawnerAuthoring : MonoBehaviour
 {
     [SerializeField] private GameObject prefabCubesDots;
     [SerializeField] private GameObject prefabBulletDots;
-
-    public bool useMultithreading = false;
-
-
+    
     public class Baker : Baker<PrefabSpawnerAuthoring>
     {
         public override void Bake(PrefabSpawnerAuthoring authoring)
         {
             Entity entity = GetEntity(TransformUsageFlags.None);
-
+            
             AddComponent(entity, new SpawnCubesConfig
             {
                 cubePrefabEntity = GetEntity(authoring.prefabCubesDots, TransformUsageFlags.Dynamic),
-                useMultiThreading = authoring.useMultithreading // Set the field
+                useMultiThreading = Global.IsMultiThreaded // Set the field
             });
 
             AddComponent(entity, new SpawnBulletsConfig
