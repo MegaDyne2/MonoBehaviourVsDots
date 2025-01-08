@@ -4,8 +4,8 @@ using UnityEngine.Serialization;
 
 public class PrefabSpawnerAuthoring : MonoBehaviour
 {
-    [FormerlySerializedAs("cubePrefab")] public GameObject prefabMonoBehaviour;
-    [FormerlySerializedAs("dotsBullets")] public GameObject prefabBulletDOTS;
+    [SerializeField] private GameObject prefabCubesDots;
+    [SerializeField] private GameObject prefabBulletDots;
 
     public bool useMultithreading = false;
 
@@ -18,13 +18,13 @@ public class PrefabSpawnerAuthoring : MonoBehaviour
 
             AddComponent(entity, new SpawnCubesConfig
             {
-                cubePrefabEntity = GetEntity(authoring.prefabMonoBehaviour, TransformUsageFlags.Dynamic),
+                cubePrefabEntity = GetEntity(authoring.prefabCubesDots, TransformUsageFlags.Dynamic),
                 useMultiThreading = authoring.useMultithreading // Set the field
             });
 
             AddComponent(entity, new SpawnBulletsConfig
             {
-                bulletEntity = GetEntity(authoring.prefabBulletDOTS, TransformUsageFlags.Dynamic),
+                bulletEntity = GetEntity(authoring.prefabBulletDots, TransformUsageFlags.Dynamic),
             });
         }
     }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3217016183963900399}
   - component: {fileID: 5873662188905218505}
   m_Layer: 0
-  m_Name: DOTsPrefabManager
+  m_Name: DotsPrefabManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1161093cb1edbcf4fafa59a99cbb2d88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 1005418165147019816, guid: 51fcf11980c5a704d84a6465c6860aed, type: 3}
+  prefabCubesDots: {fileID: 1005418165147019816, guid: 51fcf11980c5a704d84a6465c6860aed, type: 3}
+  prefabBulletDots: {fileID: 1100959871648608165, guid: 66bbfc2337c08e049917a3a84b72e3d2, type: 3}
   useMultithreading: 0
-  amountToSpawn: 0
-  dotsBullets: {fileID: 1100959871648608165, guid: 66bbfc2337c08e049917a3a84b72e3d2, type: 3}

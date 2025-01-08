@@ -26,7 +26,7 @@ public class FlyCamera : MonoBehaviour
 
     private float yaw = 0f;
     private float pitch = 0f;
-    private SpawnEntitiesSystem _spawnerDOTS;
+    private SpawnEntitiesSystem _spawnerDots;
     #endregion
 
     #region Unity Functions
@@ -61,24 +61,19 @@ public class FlyCamera : MonoBehaviour
             Input.GetAxis("Vertical")
         );
 
-        transform.position += transform.TransformDirection(move) * speed * Time.deltaTime;
+        transform.position += transform.TransformDirection(move) * (speed * Time.deltaTime);
     }
 
     private void HandleMouseFireButton()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (uIController.IsDots())
+            if (uIController.IsDOTS())
             {
-                if (subSceneDots.IsLoaded == false)
-                {
-                    return;
-                }
+                if (_spawnerDots == null)
+                    _spawnerDots = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnEntitiesSystem>();
 
-                if (_spawnerDOTS == null)
-                    _spawnerDOTS = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnEntitiesSystem>();
-
-                _spawnerDOTS.SpawnBullet(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f);
+                _spawnerDots.SpawnBullet(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f);
                 
             }
             else

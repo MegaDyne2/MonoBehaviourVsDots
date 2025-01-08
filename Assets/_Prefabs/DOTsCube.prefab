@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7991910532952137792}
   - component: {fileID: -557721287601598013}
   m_Layer: 7
-  m_Name: DOTsCube
+  m_Name: DotsCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

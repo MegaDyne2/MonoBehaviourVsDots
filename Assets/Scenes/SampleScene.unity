@@ -1044,7 +1044,7 @@ GameObject:
   - component: {fileID: 487086675}
   - component: {fileID: 487086676}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: ToggleMulti-thread
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3173,13 +3173,15 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DOTS - Jobs (Multi-thread)
+  m_Text: 'Jobs
+
+    (Multi-thread)'
 --- !u!222 &1540089121
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4906,6 +4908,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MonoBehaviorPrefabManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6350892292851532269, guid: 56fdb6f7f44bed94cbed899057ca80ef, type: 3}
+      propertyPath: toggleMultithreaded
+      value: 
+      objectReference: {fileID: 487086676}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

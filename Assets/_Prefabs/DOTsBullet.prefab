@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3727544323089707051}
   - component: {fileID: 110151445385820879}
   m_Layer: 7
-  m_Name: DOTsBullet
+  m_Name: DotsBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

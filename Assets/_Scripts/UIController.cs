@@ -28,9 +28,9 @@ public class UIController : MonoBehaviour
 
     #region Private Variables
 
-    private MonoBehaviourPrefabManager _spawnerMonobehaviour;
-    private SpawnEntitiesSystem _spawnerDOTS;
-    private bool _isDOTS = false;
+    private MonoBehaviourPrefabManager _spawnerMonoBehaviour;
+    private SpawnEntitiesSystem _spawnerDots;
+    private bool _isDots = false;
 
     #endregion
 
@@ -48,9 +48,9 @@ public class UIController : MonoBehaviour
     
     #region Accessors
 
-    public bool IsDots()
+    public bool IsDOTS()
     {
-        return _isDOTS;
+        return _isDots;
     }
 
     #endregion
@@ -113,18 +113,18 @@ public class UIController : MonoBehaviour
 
     public void OnButtonClick_Delete()
     {
-        if (_isDOTS == false)
+        if (_isDots == false)
         {
-            if (_spawnerMonobehaviour != null)
+            if (_spawnerMonoBehaviour != null)
             {
-                _spawnerMonobehaviour.DeleteAllChildren();
+                _spawnerMonoBehaviour.DeleteAllChildren();
             }
         }
         else
         {
-            if (_spawnerDOTS != null)
+            if (_spawnerDots != null)
             {
-                _spawnerDOTS.DeleteAllCubes();
+                _spawnerDots.DeleteAllCubes();
             }
         }
     }
@@ -137,21 +137,21 @@ public class UIController : MonoBehaviour
     {
         OnButtonClick_Delete();
 
-        _isDOTS = isDots;
+        _isDots = isDots;
         int row = (int)sliderRow.value;
         int col = (int)sliderCol.value;
         float zPos = sliderZPos.value;
 
         int outCount = row * col;
 
-        subSceneDots.enabled = _isDOTS;
+        subSceneDots.enabled = _isDots;
 
-        if (_isDOTS == false)
+        if (_isDots == false)
         {
-            if (_spawnerMonobehaviour == null)
-                _spawnerMonobehaviour = FindFirstObjectByType<MonoBehaviourPrefabManager>();
+            if (_spawnerMonoBehaviour == null)
+                _spawnerMonoBehaviour = FindFirstObjectByType<MonoBehaviourPrefabManager>();
 
-            _spawnerMonobehaviour.SpawnGroup(row, col, 2.0f, zPos);
+            _spawnerMonoBehaviour.SpawnGroup(row, col, 2.0f, zPos);
         }
         else
         {
@@ -159,7 +159,7 @@ public class UIController : MonoBehaviour
         }
 
 
-        string typeSpawn = _isDOTS ? "DOTs" : "Monobehaviour";
+        string typeSpawn = _isDots ? "DOTS" : "Monobehaviour";
 
         string output = $"Build for {typeSpawn} \n" +
                         $"Size: ({row} , {col}) = {outCount}\n" +
@@ -173,15 +173,16 @@ public class UIController : MonoBehaviour
 
     private IEnumerator WaitForSubScene(int row, int col, float zPos)
     {
-        while (!subSceneDots.IsLoaded)
+        //This has 
+        //while (!subSceneDots.IsLoaded)
         {
             yield return null; // Wait for the next frame
         }
         
-        if (_spawnerDOTS == null)
-            _spawnerDOTS = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnEntitiesSystem>();
+        if (_spawnerDots == null)
+            _spawnerDots = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<SpawnEntitiesSystem>();
 
-        _spawnerDOTS.SpawnGroup(row, col, 2.0f, zPos);
+        _spawnerDots.SpawnGroup(row, col, 2.0f, zPos);
     }
 
     #endregion

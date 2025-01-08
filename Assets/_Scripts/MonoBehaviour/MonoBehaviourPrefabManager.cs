@@ -1,4 +1,8 @@
 using System.Collections.Generic;
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class MonoBehaviourPrefabManager : MonoBehaviour
@@ -7,6 +11,8 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
 
     public GameObject prefabMono;
 
+    
+    
     #endregion
 
     #region Private Varibles
@@ -15,9 +21,12 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
     private readonly List<Transform> _saveObjects = new();
     private readonly List<MonoBehaviourPrefabCubeController> _monoBehaviourControllers = new();
 
+    private NativeArray<float3> _positions;
+    private NativeArray<quaternion> _rotations;
+    private NativeArray<float> _rotationSpeeds;
+    
     #endregion
-
-
+    
     #region Unity Functions
 
     private void Update()
@@ -57,6 +66,17 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
                 _monoBehaviourControllers.Add(go.GetComponent<MonoBehaviourPrefabCubeController>());
             }
         }
+        
+        // Resize NativeArrays after spawning
+        int count = _monoBehaviourControllers.Count;
+        
+        if (_positions.IsCreated) _positions.Dispose();
+        if (_rotations.IsCreated) _rotations.Dispose();
+        if (_rotationSpeeds.IsCreated) _rotationSpeeds.Dispose();
+
+        _positions = new NativeArray<float3>(count, Allocator.Persistent);
+        _rotations = new NativeArray<quaternion>(count, Allocator.Persistent);
+        _rotationSpeeds = new NativeArray<float>(count, Allocator.Persistent);
     }
 
     public void DeleteAllChildren()
