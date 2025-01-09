@@ -41,6 +41,11 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
 
     private void Update()
     {
+        if (Global.IsDots == true)
+        {
+            return;
+        }
+
         if (toggleMultithreaded.isOn)
         {
             Jobs_Update();
@@ -52,6 +57,8 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
 
     private void SingleThread_Update()
     {
+        var startTime = System.Diagnostics.Stopwatch.StartNew();
+
         foreach (var currentCube in _monoBehaviourControllers)
         {
             if (currentCube == null)
@@ -59,6 +66,8 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
             
             currentCube.transform.rotation  = Global.CalculateNewRotation(currentCube.rotationSpeed, currentCube.transform.rotation,Time.deltaTime, Global.IterationCount);
         }
+        startTime.Stop();
+        Global.ElapsedRotationMS = startTime.Elapsed.TotalMilliseconds;
     }
 
     #endregion
@@ -118,6 +127,8 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
     #region Jobs
     private void Jobs_Update()
     {
+        var startTime = System.Diagnostics.Stopwatch.StartNew();
+
         // Step 1: Populate NativeArrays
         for (int i = 0; i < _monoBehaviourControllers.Count; i++)
         {
@@ -141,6 +152,9 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
         JobHandle jobHandle = rotationJob.Schedule(_monoBehaviourControllers.Count, 64);
         jobHandle.Complete();
 
+        startTime.Stop();
+        Global.ElapsedRotationMS = startTime.Elapsed.TotalMilliseconds;
+        
         // Step 3: Apply results back to MonoBehaviour objects
         for (int i = 0; i < _monoBehaviourControllers.Count; i++)
         {

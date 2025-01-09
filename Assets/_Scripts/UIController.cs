@@ -133,8 +133,9 @@ public class UIController : MonoBehaviour
 
         string output = $"Build for {typeSpawn} \n" +
                         $"Size: ({_row} , {_col}) = {count}\n" +
+                        $"Press <b>Esc</b> to return UI Mode\n" +
                         $"Mouse Left Click to Fire\n" +
-                        $"Press <b>Esc</b> to return mouse\n";
+                        $"Mouse Right Click to Toggle modes\n";
 
         
         string multiThreaded = toggleMultiThreaded.isOn ?  "Using Multi thread\n" : "Using Single thread\n";

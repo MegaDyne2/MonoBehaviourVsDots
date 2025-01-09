@@ -20,6 +20,7 @@ public class FPSCounter : MonoBehaviour
 
     void Start()
     {
+        ShowMessage();
         //Have it update the text every 1 seconds
         StartCoroutine(StartCoroutineUpdatePerSecond());
     }
@@ -42,9 +43,13 @@ public class FPSCounter : MonoBehaviour
         for (;;)
         {
             yield return new WaitForSeconds(1.0f);
-            fpsText.text = $"FPS: {Mathf.Ceil(fps)}";
+            ShowMessage();
         }
     }
 
+    private void ShowMessage()
+    {
+        fpsText.text = $"Real FPS: <u>{fps.ToString("0.00")}</u>";
+    }
     #endregion
 }
