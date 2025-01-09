@@ -16,7 +16,7 @@ public partial struct RotateCubesSystem : ISystem
         
         var spawnConfig = SystemAPI.GetSingleton<SpawnCubesConfig>();
         
-        if (spawnConfig.useMultiThreading)
+        if (Global.IsMultiThreaded)
         {
             // Multi-threaded job execution
             var job = new HandleCubesJob

@@ -15,8 +15,7 @@ public class PrefabSpawnerAuthoring : MonoBehaviour
             
             AddComponent(entity, new SpawnCubesConfig
             {
-                cubePrefabEntity = GetEntity(authoring.prefabCubesDots, TransformUsageFlags.Dynamic),
-                useMultiThreading = Global.IsMultiThreaded // Set the field
+                cubePrefabEntity = GetEntity(authoring.prefabCubesDots, TransformUsageFlags.Dynamic)
             });
 
             AddComponent(entity, new SpawnBulletsConfig
@@ -31,7 +30,6 @@ public class PrefabSpawnerAuthoring : MonoBehaviour
 public struct SpawnCubesConfig : IComponentData
 {
     public Entity cubePrefabEntity;
-    public bool useMultiThreading;
 }
 
 public struct SpawnBulletsConfig : IComponentData
