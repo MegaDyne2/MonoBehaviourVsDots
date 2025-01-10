@@ -93,7 +93,7 @@ This project highlights:
 
 ## 💾 Installation & Usage
 
-1. **Download the executable** from the [Releases section](https://github.com/your-repo/releases).
+1. **Download the executable** from the [Releases section](https://github.com/MegaDyne2/MonoBehaviourVsDots/releases).
 2. Extract the `.zip` file to your desired location.
 3. Run the `MonoBehaviourVsDots.exe` file.
 
@@ -114,4 +114,3 @@ This project is licensed under the [MIT License](LICENSE).
 ## ✨ Acknowledgments
 
 - Unity Technologies for providing an excellent development environment.
-- **Kenney Assets** for crosshair icons and other visual assets.
