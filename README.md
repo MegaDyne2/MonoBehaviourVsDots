@@ -99,13 +99,13 @@ This project highlights:
 
 ## 🖼 Screenshots
 
-*Add screenshots here showing the HUD, spawning cubes, and FPS comparisons.*
+![Main Screenshot](Main.png "Main Screenshot")
 
 ## 🏗 Future Enhancements
 
-- Linux build (coming soon).
-- Improved visuals for demo purposes.
-- Additional performance metrics.
+- Linux build
+- Interaction between MonoBehaviour Bullets and DOTS Cubes
+- Interaction between DOTS Bullets and MonoBehaviour Cubes
 
 ## 📄 License
 
