@@ -107,10 +107,14 @@ This project highlights:
 - Interaction between MonoBehaviour Bullets and DOTS Cubes
 - Interaction between DOTS Bullets and MonoBehaviour Cubes
 
+## ✨ Acknowledgments
+
+- Special thanks to the following YouTube creators for inspiring this project:
+  - [Brackeys: Unity DOTS Crash Course](https://www.youtube.com/watch?v=HHeuXgu7It8)
+  - [Code Monkey: Unity DOTS Beginner's Guide](https://www.youtube.com/watch?v=4ZYn9sR3btg)
+- Unity Technologies for providing an excellent development environment.
+- Developed by **David To**.
+
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
-
-## ✨ Acknowledgments
-
-- Unity Technologies for providing an excellent development environment.
