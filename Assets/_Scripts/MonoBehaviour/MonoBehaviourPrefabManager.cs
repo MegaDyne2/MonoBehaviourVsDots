@@ -151,9 +151,6 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
 
         JobHandle jobHandle = rotationJob.Schedule(_monoBehaviourControllers.Count, 64);
         jobHandle.Complete();
-
-        startTime.Stop();
-        Global.ElapsedRotationMS = startTime.Elapsed.TotalMilliseconds;
         
         // Step 3: Apply results back to MonoBehaviour objects
         for (int i = 0; i < _monoBehaviourControllers.Count; i++)
@@ -163,6 +160,9 @@ public class MonoBehaviourPrefabManager : MonoBehaviour
 
             _monoBehaviourControllers[i].transform.rotation = _rotations[i];
         }
+        
+        startTime.Stop();
+        Global.ElapsedRotationMS = startTime.Elapsed.TotalMilliseconds;
     }
 
 
