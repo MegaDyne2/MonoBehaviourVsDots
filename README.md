@@ -2,7 +2,7 @@
 
 A Unity-based project demonstrating the performance differences between traditional **MonoBehaviour** workflows and the **Unity DOTS (Data-Oriented Technology Stack)**. This project explores how Unity handles large-scale object manipulation, with a focus on multi-threading and entity-based architecture.
 
-## 📖 Description
+##  Description
 
 This project highlights:
 
@@ -10,7 +10,7 @@ This project highlights:
 - A performance comparison between **MonoBehaviour** and **DOTS**, in both single-threaded and multi-threaded setups.
 - Real-time FPS tracking for both application performance and calculation performance (rotation calculations).
 
-## 🛠 Features
+##  Features
 
 - **Interactive Spawning**:
   - Spawn up to **250,000 cubes** using MonoBehaviour or DOTS.
@@ -32,7 +32,7 @@ This project highlights:
   - Built with low-quality settings for high performance.
   - Configured to run uncapped for optimal FPS demonstration.
 
-## 🕹 Controls
+##  Controls
 
 ### HUD Controls
 
@@ -58,7 +58,7 @@ This project highlights:
 | `W/A/S/D`             | Move forward, left, backward, and right.                    |
 | `Esc`                 | Return to HUD.                                              |
 
-## 📊 What This Demonstrates
+##  What This Demonstrates
 
 - **MonoBehaviour**:
   - Performance with large datasets.
@@ -91,23 +91,23 @@ This project highlights:
   - Target frame rate: **500 FPS** (uncapped where possible).
   - Quality level: **Low**.
 
-## 💾 Installation & Usage
+##  Installation & Usage
 
 1. **Download the executable** from the [Releases section](https://github.com/MegaDyne2/MonoBehaviourVsDots/releases).
 2. Extract the `.zip` file to your desired location.
 3. Run the `MonoBehaviourVsDots.exe` file.
 
-## 🖼 Screenshots
+##  Screenshots
 
 ![Main Screenshot](Main.png "Main Screenshot")
 
-## 🏗 Future Enhancements
+##  Future Enhancements
 
 - Linux build
 - Interaction between MonoBehaviour Bullets and DOTS Cubes
 - Interaction between DOTS Bullets and MonoBehaviour Cubes
 
-## ✨ Acknowledgments
+##  Acknowledgments
 
 - Special thanks to the following YouTube creators for inspiring this project:
   - [Brackeys: Unity DOTS Crash Course](https://www.youtube.com/watch?v=HHeuXgu7It8)
@@ -115,6 +115,6 @@ This project highlights:
 - Unity Technologies for providing an excellent development environment.
 - Developed by **David To**.
 
-## 📄 License
+##  License
 
 This project is licensed under the [MIT License](LICENSE).
