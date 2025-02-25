@@ -68,7 +68,7 @@ This project highlights:
   - Efficient entity management for massive datasets.
   - Performance boosts with multi-threading.
 
-## 🔧 Technical Details
+##  Technical Details
 
 ### Unity Version
 
