@@ -1,4 +1,4 @@
-# MonoBehaviour vs DOTS: Spinning Cubes Showdown
+# MonoBehaviour vs DOTS: Spinning Cubes
 
 A Unity-based project demonstrating the performance differences between traditional **MonoBehaviour** workflows and the **Unity DOTS (Data-Oriented Technology Stack)**. This project explores how Unity handles large-scale object manipulation, with a focus on multi-threading and entity-based architecture.
 
